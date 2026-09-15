@@ -1,5 +1,3 @@
-# 🌍 Inbound Authentication Origins
-
 # Azure Sentinel (SIEM) Inbound Authentication Origins & Geographic Threat Visualization
 
 ## Project Overview

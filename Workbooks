@@ -1,6 +1,0 @@
-Workbooks/
-│
-├── inbound-authentication-origins.json
-├── outbound-connections.json
-├── data-exfiltration.json
-└── inbound-threat-intel.json

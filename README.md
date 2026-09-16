@@ -1,149 +1,279 @@
-# Azure-Sentinel-Security-Analytics-Visualization
+# Azure Sentinel Security Analytics & Visualization
 
 ## Project Overview
 
-This project demonstrates the implementation of a Microsoft Sentinel security visualization focused on inbound authentication activity using **DeviceLogonEvents**. By filtering, enriching, and aggregating remote authentication telemetry, this project transforms raw endpoint authentication data into an interactive **KQL (Kusto Query Language) Workbook**.
+This project demonstrates the development of **Microsoft Sentinel security analytics, KQL queries, and interactive security workbooks** designed to transform raw security telemetry into actionable visualizations for security monitoring, threat hunting, and investigation.
 
-The primary objective was to build a geographic visualization that identifies where external authentication activity originates and distinguishes successful authentication from failed attempts.
+The project focuses on building practical security monitoring scenarios across endpoint, identity, network, threat intelligence, and Azure resource telemetry.
 
----
-
-## Core Visualization & Scenario Implemented
-
-### 1. Inbound Authentication Origins
-
-* **Log Source:** `DeviceLogonEvents`
-* **Objective:** Maps public external source IP addresses (`RemoteIP`) associated with `Network` and `RemoteInteractive` logons to identify geographic authentication patterns.
-* **Business Value:** Provides analysts with geographic and source-level context for investigating unusual successful authentications, high-volume authentication sources, and repeated authentication failures.
-
-#### Visual Dashboard
-### Inbound Authentication Origins — DeviceLogonEvents
-<img width="1589" height="470" alt="image" src="https://github.com/user-attachments/assets/04473d08-41bf-493f-80b1-6d88074f51ff" />
-
-#### The KQL Query
-
-```kusto
-DeviceLogonEvents
-| where Timestamp {TimeRange}
-| where RemoteIPType == "Public"
-| where isnotempty(RemoteIP)
-| where LogonType in ("Network", "RemoteInteractive")
-| extend geo = geo_info_from_ip_address(RemoteIP)
-| extend Latitude  = toreal(geo.latitude),
-         Longitude = toreal(geo.longitude),
-         Country   = tostring(geo.country),
-         City      = tostring(geo.city)
-| where isnotempty(Latitude) and isnotempty(Longitude)
-| summarize Attempts        = count(),
-            Successes       = countif(ActionType == "LogonSuccess"),
-            Failures        = countif(ActionType == "LogonFailed"),
-            TargetedDevices = dcount(DeviceName),
-            Accounts        = make_set(AccountName, 25)
-         by RemoteIP, Country, City, Latitude, Longitude
-| extend MapLabel = strcat(RemoteIP, " (", Country, ") — ", Successes, " success / ", Attempts, " total")
-| project Latitude, Longitude, MapLabel, Attempts, Successes, Failures, TargetedDevices, RemoteIP, Country, City, Accounts
-| order by Successes desc, Attempts desc
-```
-
-### 📊 Dashboard Analysis & Key Findings
-
-### 🔍 KQL Query Breakdown
-
-* **Filters External Activity:** Uses `RemoteIPType == "Public"` to focus on authentication originating from publicly routable IP addresses.
-* **Focuses on Remote Authentication:** Filters `LogonType` for `Network` and `RemoteInteractive` activity.
-* **Enriches Source IPs:** Uses the native `geo_info_from_ip_address()` function to translate source IP addresses into geographic information.
-* **Aggregates Authentication Activity:** Calculates total attempts, successful logons, failed logons, targeted devices, and associated accounts for each source IP.
-
-### 🗺️ Map Visualization & Legend Key
-
-* **Authentication Origins:** Bubbles represent the approximate geographic location of external source IP addresses generating remote authentication activity.
-* **Bubble Size (Volume):** Larger bubbles represent a higher number of authentication attempts.
-* **Authentication Success:** The legend tracks the number of successful logons associated with each source.
-* **Color Coding:** The map uses a green-to-red heatmap based on authentication attempt volume.
-
-### ⚠️ Key Security Anomalies Detected
-
-* **Unexpected Successful Authentication:** A successful `LogonSuccess` originating from a country or region where the organization does not normally operate can represent a potentially significant authentication anomaly.
-* **High-Volume Sources:** Large bubbles can identify source IPs generating unusually high volumes of authentication attempts and may warrant investigation for brute-force, password-spraying, or other automated activity.
-* **Repeated Authentication Failures:** Sources producing large numbers of `LogonFailed` events can indicate repeated credential attempts against exposed systems.
-* **Multiple Targeted Devices or Accounts:** The `TargetedDevices` and `Accounts` fields provide additional context for determining whether a source is concentrating activity against multiple systems or identities.
-
-> Geographic anomalies are investigative signals rather than standalone proof of malicious activity. VPNs, proxies, cloud infrastructure, shared networks, and approximate IP geolocation can produce unexpected locations.
+Each scenario includes the underlying **KQL query**, **Microsoft Sentinel Workbook**, **visual dashboard**, and detailed documentation explaining the analysis and security findings.
 
 ---
 
-### 2. Source IP Authentication Breakdown
+## Core Visualizations & Security Scenarios
 
-* **Log Source:** `DeviceLogonEvents`
-* **Objective:** Provides a source-level breakdown of successful and failed authentication activity.
-* **Business Value:** Allows analysts to move from geographic observations to individual source IPs and examine authentication volume, targeted devices, and associated accounts.
+### 1. 🌍 Inbound Authentication Origins
 
-#### The KQL Query
+**Focus:** Geographic analysis of external authentication activity.
 
-```kusto
-DeviceLogonEvents
-| where Timestamp {TimeRange}
-| where RemoteIPType == "Public" and isnotempty(RemoteIP)
-| where LogonType in ("Network", "RemoteInteractive")
-| extend geo = geo_info_from_ip_address(RemoteIP)
-| summarize Attempts  = count(),
-            Successes = countif(ActionType == "LogonSuccess"),
-            Failures  = countif(ActionType == "LogonFailed"),
-            Devices   = dcount(DeviceName),
-            Accounts  = make_set(AccountName, 25)
-         by RemoteIP,
-            Country = tostring(geo.country),
-            City    = tostring(geo.city)
-| order by Successes desc, Attempts desc
-```
+**Log Source:** `DeviceLogonEvents`
 
-### 📊 Dashboard Analysis & Key Findings
+**Key Capabilities:**
 
-## 🔍 KQL Query Breakdown
+* Geographic visualization of external source IP addresses
+* Successful vs. failed authentication analysis
+* Authentication source volume analysis
+* Targeted device and account identification
+* Identification of unusual geographic authentication patterns
 
-* **Filters Public Sources:** Limits the analysis to authentication events associated with public source IP addresses.
-* **Focuses on Remote Logons:** Includes `Network` and `RemoteInteractive` authentication types.
-* **Enriches Geographic Context:** Uses `geo_info_from_ip_address()` to associate source IPs with countries and cities.
-* **Ranks Authentication Sources:** Summarizes attempts, successes, failures, devices, and accounts, then orders sources by successful authentication activity.
+**Resources:**
+
+* 📄 [Detailed Lab Documentation](Documentation/Inbound-Authentication-Origins.md)
+* 📊 [Workbook JSON](Workbooks/Inbound-Authentication-Origins.json)
+* 🔎 [KQL Query](Queries/Inbound-Authentication-Origins.kql)
+* 🖼️ [Dashboard Screenshot](Screenshots/Inbound-Authentication-Origins.png)
 
 ---
 
-## 🗺️ Source IP Analysis
+### 2. 🌐 Outbound Connections
 
-* **Source IP:** Identifies the external address responsible for the authentication activity.
-* **Authentication Volume:** `Attempts` represents the total number of authentication events from the source.
-* **Success vs. Failure:** `Successes` and `Failures` allow analysts to compare authentication outcomes.
-* **Targeted Devices:** `Devices` identifies how many devices were associated with the source.
-* **Associated Accounts:** `Accounts` provides the identities observed in the authentication activity.
+**Focus:** Analysis and visualization of outbound network connections.
+
+**Log Source:** `DeviceNetworkEvents`
+
+**Key Capabilities:**
+
+* External destination analysis
+* Source device identification
+* Connection volume analysis
+* Geographic/network visualization
+* Investigation of unusual outbound activity
+
+**Resources:**
+
+* 📄 [Detailed Lab Documentation](Documentation/Outbound-Connections.md)
+* 📊 [Workbook JSON](Workbooks/Outbound-Connections.json)
+* 🔎 [KQL Query](Queries/Outbound-Connections.kql)
+* 🖼️ [Dashboard Screenshot](Screenshots/Outbound-Connections.png)
 
 ---
 
-## ⚠️ Key Security Anomalies Detected
+### 3. 📤 Data Exfiltration
 
-* **Successful Authentication From an Unusual Region:** Successful activity from an unexpected geographic location should be correlated with user, device, and identity context.
-* **High-Volume Authentication:** Large numbers of attempts from a single source may indicate automated authentication activity.
-* **Multiple Account Targets:** A source interacting with numerous accounts may warrant investigation for password spraying or credential attacks.
-* **Multiple Device Targets:** A source reaching multiple devices can provide additional context when determining the scope of an authentication campaign.
+**Focus:** Identification and visualization of potentially unusual data transfer activity.
+
+**Key Capabilities:**
+
+* Data transfer analysis
+* Source and destination investigation
+* High-volume activity identification
+* Geographic and network context
+* Potential exfiltration pattern analysis
+
+**Resources:**
+
+* 📄 [Detailed Lab Documentation](Documentation/Data-Exfiltration.md)
+* 📊 [Workbook JSON](Workbooks/Data-Exfiltration.json)
+* 🔎 [KQL Query](Queries/Data-Exfiltration.kql)
+* 🖼️ [Dashboard Screenshot](Screenshots/Data-Exfiltration.png)
 
 ---
 
-**NOTE:** The source data for this visualization uses the `DeviceLogonEvents` table and required a different approach from identity-based `SigninLogs` data. The workbook uses the native `geo_info_from_ip_address()` function rather than the GeoIP watchlist approach used in some other visualizations. This demonstrates how SIEM queries must be adapted to the structure and capabilities of each log source.
+### 4. 🛡️ Inbound Threat Intelligence
+
+**Focus:** Geographic and source-level visualization of inbound activity associated with threat intelligence data.
+
+**Key Capabilities:**
+
+* Threat intelligence correlation
+* Source IP analysis
+* Geographic threat visualization
+* Identification of potentially malicious sources
+* Investigation prioritization
+
+**Resources:**
+
+* 📄 [Detailed Lab Documentation](Documentation/Inbound-Threat-Intel.md)
+* 📊 [Workbook JSON](Workbooks/Inbound-Threat-Intel.json)
+* 🔎 [KQL Query](Queries/Inbound-Threat-Intel.kql)
+* 🖼️ [Dashboard Screenshot](Screenshots/Inbound-Threat-Intel.png)
+
+---
+
+### 5. 🔐 Entra ID Authentication Failures
+
+**Focus:** Analysis of failed Microsoft Entra ID authentication activity.
+
+**Log Source:** `SigninLogs`
+
+**Key Capabilities:**
+
+* Authentication failure analysis
+* Source IP investigation
+* Geographic authentication patterns
+* Account targeting analysis
+* Identification of potential credential attacks
+
+**Resources:**
+
+* 📄 [Detailed Lab Documentation](Documentation/Entra-ID-Authentication-Failures.md)
+* 📊 [Workbook JSON](Workbooks/Entra-ID-Authentication-Failures.json)
+* 🔎 [KQL Query](Queries/Entra-ID-Authentication-Failures.kql)
+* 🖼️ [Dashboard Screenshot](Screenshots/Entra-ID-Authentication-Failures.png)
+
+---
+
+### 6. ✅ Entra ID Authentication Success
+
+**Focus:** Analysis of successful Microsoft Entra ID authentication activity.
+
+**Log Source:** `SigninLogs`
+
+**Key Capabilities:**
+
+* Successful authentication monitoring
+* Geographic source analysis
+* User and application context
+* Unusual authentication identification
+* Investigation of potentially compromised accounts
+
+**Resources:**
+
+* 📄 [Detailed Lab Documentation](Documentation/Entra-ID-Authentication-Success.md)
+* 📊 [Workbook JSON](Workbooks/Entra-ID-Authentication-Success.json)
+* 🔎 [KQL Query](Queries/Entra-ID-Authentication-Success.kql)
+* 🖼️ [Dashboard Screenshot](Screenshots/Entra-ID-Authentication-Success.png)
+
+---
+
+### 7. ☁️ Azure Resource Creation & Modifications
+
+**Focus:** Monitoring Azure resource creation and modification activity.
+
+**Key Capabilities:**
+
+* Azure resource activity monitoring
+* Administrative action analysis
+* Resource creation tracking
+* Modification tracking
+* Investigation of potentially unauthorized cloud activity
+
+**Resources:**
+
+* 📄 [Detailed Lab Documentation](Documentation/Azure-Resource-Creation-Modifications.md)
+* 📊 [Workbook JSON](Workbooks/Azure-Resource-Creation-Modifications.json)
+* 🔎 [KQL Query](Queries/Azure-Resource-Creation-Modifications.kql)
+* 🖼️ [Dashboard Screenshot](Screenshots/Azure-Resource-Creation-Modifications.png)
+
+---
+
+### 8. 🖥️ VM Authentication Failures
+
+**Focus:** Analysis of authentication failures targeting Azure virtual machines.
+
+**Key Capabilities:**
+
+* VM authentication monitoring
+* Failed login analysis
+* Source IP investigation
+* Geographic activity visualization
+* Identification of potential brute-force activity
+
+**Resources:**
+
+* 📄 [Detailed Lab Documentation](Documentation/VM-Authentication-Failures.md)
+* 📊 [Workbook JSON](Workbooks/VM-Authentication-Failures.json)
+* 🔎 [KQL Query](Queries/VM-Authentication-Failures.kql)
+* 🖼️ [Dashboard Screenshot](Screenshots/VM-Authentication-Failures.png)
 
 ---
 
 ## Technical Architecture & Workflow
 
-1. **Ingestion:** Authentication telemetry is collected in **Microsoft Sentinel / Log Analytics** through the `DeviceLogonEvents` data source.
-2. **Data Extraction:** Used **Kusto Query Language (KQL)** to filter public remote authentication activity, enrich source IPs with geographic information, and aggregate authentication results.
-3. **Visualization:** Configured a **Microsoft Sentinel Workbook** using geographic map and table visualizations to transform raw authentication telemetry into an analyst-friendly security dashboard.
+1. **Ingestion**
+   Security telemetry is collected through Microsoft Sentinel and connected data sources such as endpoint, identity, network, threat intelligence, and Azure activity logs.
+
+2. **Data Extraction & Analysis**
+   **Kusto Query Language (KQL)** is used to filter, transform, enrich, aggregate, and analyze security telemetry.
+
+3. **Security Enrichment**
+   Where applicable, telemetry is enriched with geographic, identity, network, or threat intelligence context to provide additional investigative value.
+
+4. **Visualization**
+   KQL results are transformed into interactive **Microsoft Sentinel Workbooks** using maps, tables, charts, and other visualization components.
+
+5. **Investigation**
+   Visualizations are designed to help analysts identify anomalies, prioritize suspicious activity, and develop additional investigative queries.
+
+---
+
+## Repository Structure
+
+```text
+Azure-Sentinel-SIEM-Live-Threat-Operational-Data-Visualization
+│
+├── README.md
+│
+└── LABS
+    │
+    ├── Inbound-Authentication-Origins
+    │   ├── README.md
+    │   ├── Inbound-Authentication-Origins.json
+    │   ├── Inbound-Authentication-Origins.kql
+    │   └── Inbound-Authentication-Origins.png
+    │
+    ├── Outbound-Connections
+    │   ├── README.md
+    │   ├── Outbound-Connections.json
+    │   ├── Outbound-Connections.kql
+    │   └── Outbound-Connections.png
+    │
+    ├── Data-Exfiltration
+    │   ├── README.md
+    │   ├── Data-Exfiltration.json
+    │   ├── Data-Exfiltration.kql
+    │   └── Data-Exfiltration.png
+    │
+    ├── Inbound-Threat-Intelligence
+    │   ├── README.md
+    │   ├── Inbound-Threat-Intelligence.json
+    │   ├── Inbound-Threat-Intelligence.kql
+    │   └── Inbound-Threat-Intelligence.png
+    │
+    ├── Entra-ID-Authentication-Failures
+    │   ├── README.md
+    │   ├── Entra-ID-Authentication-Failures.json
+    │   ├── Entra-ID-Authentication-Failures.kql
+    │   └── Entra-ID-Authentication-Failures.png
+    │
+    ├── Entra-ID-Authentication-Success
+    │   ├── README.md
+    │   ├── Entra-ID-Authentication-Success.json
+    │   ├── Entra-ID-Authentication-Success.kql
+    │   └── Entra-ID-Authentication-Success.png
+    │
+    ├── Azure-Resource-Creation-Modifications
+    │   ├── README.md
+    │   ├── Azure-Resource-Creation-Modifications.json
+    │   ├── Azure-Resource-Creation-Modifications.kql
+    │   └── Azure-Resource-Creation-Modifications.png
+    │
+    └── VM-Authentication-Failures
+        ├── README.md
+        ├── VM-Authentication-Failures.json
+        ├── VM-Authentication-Failures.kql
+        └── VM-Authentication-Failures.png
+```
 
 ---
 
 ## Skills Demonstrated
 
-* **Microsoft Sentinel:** Building and configuring security workbooks and visualizations.
-* **KQL & Data Analysis:** Filtering, aggregating, and transforming endpoint authentication telemetry.
-* **Security Data Enrichment:** Using `geo_info_from_ip_address()` to add geographic context to source IP addresses.
-* **Threat Hunting & Investigation:** Identifying unusual authentication patterns and high-volume sources.
-* **Data Visualization:** Translating raw authentication events into geographic and source-level security dashboards.
-
+* **Microsoft Sentinel:** Security workbook development and visualization
+* **KQL:** Query development, filtering, aggregation, transformation, and analysis
+* **Security Monitoring:** Monitoring endpoint, identity, network, and cloud telemetry
+* **Threat Hunting:** Identifying anomalous and potentially malicious activity
+* **Security Investigation:** Source, account, device, geographic, and activity analysis
+* **Security Data Enrichment:** Adding geographic and threat intelligence context
+* **Data Visualization:** Converting security telemetry into analyst-focused dashboards
+* **SIEM Operations:** Using Microsoft Sentinel to support security monitoring and investigation

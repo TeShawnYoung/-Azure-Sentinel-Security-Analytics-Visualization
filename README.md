@@ -12,53 +12,28 @@ Each scenario includes the underlying **KQL query**, **Microsoft Sentinel Workbo
 
 ## Core Visualizations & Security Scenarios
 
-### 1. 🌍 Inbound Authentication Origins
+### 1. ☁️ Azure Resource Creation & Modifications
 
-**Focus:** Geographic analysis of external authentication activity.
-
-**Log Source:** `DeviceLogonEvents`
+**Focus:** Monitoring Azure resource creation and modification activity.
 
 **Key Capabilities:**
 
-* Geographic visualization of external source IP addresses
-* Successful vs. failed authentication analysis
-* Authentication source volume analysis
-* Targeted device and account identification
-* Identification of unusual geographic authentication patterns
+* Azure resource activity monitoring
+* Administrative action analysis
+* Resource creation tracking
+* Modification tracking
+* Investigation of potentially unauthorized cloud activity
 
 **Resources:**
 
-* 📄 [Detailed Lab Documentation](Documentation/Inbound-Authentication-Origins.md)
-* 📊 [Workbook JSON](Workbooks/Inbound-Authentication-Origins.json)
-* 🔎 [KQL Query](Queries/Inbound-Authentication-Origins.kql)
-* 🖼️ [Dashboard Screenshot](Screenshots/Inbound-Authentication-Origins.png)
+* 📄 [Detailed Lab Documentation](Documentation/Azure-Resource-Creation-Modifications.md)
+* 📊 [Workbook JSON](Workbooks/Azure-Resource-Creation-Modifications.json)
+* 🔎 [KQL Query](Queries/Azure-Resource-Creation-Modifications.kql)
+* 🖼️ [Dashboard Screenshot](Screenshots/Azure-Resource-Creation-Modifications.png)
 
 ---
 
-### 2. 🌐 Outbound Connections
-
-**Focus:** Analysis and visualization of outbound network connections.
-
-**Log Source:** `DeviceNetworkEvents`
-
-**Key Capabilities:**
-
-* External destination analysis
-* Source device identification
-* Connection volume analysis
-* Geographic/network visualization
-* Investigation of unusual outbound activity
-
-**Resources:**
-
-* 📄 [Detailed Lab Documentation](Documentation/Outbound-Connections.md)
-* 📊 [Workbook JSON](Workbooks/Outbound-Connections.json)
-* 🔎 [KQL Query](Queries/Outbound-Connections.kql)
-* 🖼️ [Dashboard Screenshot](Screenshots/Outbound-Connections.png)
-
----
-
-### 3. 📤 Data Exfiltration
+### 2. 📤 Data Exfiltration
 
 **Focus:** Identification and visualization of potentially unusual data transfer activity.
 
@@ -79,28 +54,7 @@ Each scenario includes the underlying **KQL query**, **Microsoft Sentinel Workbo
 
 ---
 
-### 4. 🛡️ Inbound Threat Intelligence
-
-**Focus:** Geographic and source-level visualization of inbound activity associated with threat intelligence data.
-
-**Key Capabilities:**
-
-* Threat intelligence correlation
-* Source IP analysis
-* Geographic threat visualization
-* Identification of potentially malicious sources
-* Investigation prioritization
-
-**Resources:**
-
-* 📄 [Detailed Lab Documentation](Documentation/Inbound-Threat-Intel.md)
-* 📊 [Workbook JSON](Workbooks/Inbound-Threat-Intel.json)
-* 🔎 [KQL Query](Queries/Inbound-Threat-Intel.kql)
-* 🖼️ [Dashboard Screenshot](Screenshots/Inbound-Threat-Intel.png)
-
----
-
-### 5. 🔐 Entra ID Authentication Failures
+### 3. 🔐 Entra ID Authentication Failures
 
 **Focus:** Analysis of failed Microsoft Entra ID authentication activity.
 
@@ -123,7 +77,7 @@ Each scenario includes the underlying **KQL query**, **Microsoft Sentinel Workbo
 
 ---
 
-### 6. ✅ Entra ID Authentication Success
+### 4. ✅ Entra ID Authentication Success
 
 **Focus:** Analysis of successful Microsoft Entra ID authentication activity.
 
@@ -146,24 +100,70 @@ Each scenario includes the underlying **KQL query**, **Microsoft Sentinel Workbo
 
 ---
 
-### 7. ☁️ Azure Resource Creation & Modifications
+### 5. 🌍 Inbound Authentication Origins
 
-**Focus:** Monitoring Azure resource creation and modification activity.
+**Focus:** Geographic analysis of external authentication activity.
+
+**Log Source:** `DeviceLogonEvents`
 
 **Key Capabilities:**
 
-* Azure resource activity monitoring
-* Administrative action analysis
-* Resource creation tracking
-* Modification tracking
-* Investigation of potentially unauthorized cloud activity
+* Geographic visualization of external source IP addresses
+* Successful vs. failed authentication analysis
+* Authentication source volume analysis
+* Targeted device and account identification
+* Identification of unusual geographic authentication patterns
 
 **Resources:**
 
-* 📄 [Detailed Lab Documentation](Documentation/Azure-Resource-Creation-Modifications.md)
-* 📊 [Workbook JSON](Workbooks/Azure-Resource-Creation-Modifications.json)
-* 🔎 [KQL Query](Queries/Azure-Resource-Creation-Modifications.kql)
-* 🖼️ [Dashboard Screenshot](Screenshots/Azure-Resource-Creation-Modifications.png)
+* 📄 [Detailed Lab Documentation](Documentation/Inbound-Authentication-Origins.md)
+* 📊 [Workbook JSON](Workbooks/Inbound-Authentication-Origins.json)
+* 🔎 [KQL Query](Queries/Inbound-Authentication-Origins.kql)
+* 🖼️ [Dashboard Screenshot](Screenshots/Inbound-Authentication-Origins.png)
+
+---
+
+### 6. 🛡️ Inbound Threat Intelligence
+
+**Focus:** Geographic and source-level visualization of inbound activity associated with threat intelligence data.
+
+**Key Capabilities:**
+
+* Threat intelligence correlation
+* Source IP analysis
+* Geographic threat visualization
+* Identification of potentially malicious sources
+* Investigation prioritization
+
+**Resources:**
+
+* 📄 [Detailed Lab Documentation](Documentation/Inbound-Threat-Intel.md)
+* 📊 [Workbook JSON](Workbooks/Inbound-Threat-Intel.json)
+* 🔎 [KQL Query](Queries/Inbound-Threat-Intel.kql)
+* 🖼️ [Dashboard Screenshot](Screenshots/Inbound-Threat-Intel.png)
+
+---
+
+### 7. 🌐 Outbound Connections
+
+**Focus:** Analysis and visualization of outbound network connections.
+
+**Log Source:** `DeviceNetworkEvents`
+
+**Key Capabilities:**
+
+* External destination analysis
+* Source device identification
+* Connection volume analysis
+* Geographic/network visualization
+* Investigation of unusual outbound activity
+
+**Resources:**
+
+* 📄 [Detailed Lab Documentation](Documentation/Outbound-Connections.md)
+* 📊 [Workbook JSON](Workbooks/Outbound-Connections.json)
+* 🔎 [KQL Query](Queries/Outbound-Connections.kql)
+* 🖼️ [Dashboard Screenshot](Screenshots/Outbound-Connections.png)
 
 ---
 
@@ -216,29 +216,17 @@ Azure Sentinel Security Analytics & Visualization
 │
 └── LABS
     │
-    ├── Inbound-Authentication-Origins
+    ├── Azure-Resource-Creation-Modifications
     │   ├── README.md
-    │   ├── Inbound-Authentication-Origins.json
-    │   ├── Inbound-Authentication-Origins.kql
-    │   └── Inbound-Authentication-Origins.png
-    │
-    ├── Outbound-Connections
-    │   ├── README.md
-    │   ├── Outbound-Connections.json
-    │   ├── Outbound-Connections.kql
-    │   └── Outbound-Connections.png
+    │   ├── Azure-Resource-Creation-Modifications.json
+    │   ├── Azure-Resource-Creation-Modifications.kql
+    │   └── Azure-Resource-Creation-Modifications.png
     │
     ├── Data-Exfiltration
     │   ├── README.md
     │   ├── Data-Exfiltration.json
     │   ├── Data-Exfiltration.kql
     │   └── Data-Exfiltration.png
-    │
-    ├── Inbound-Threat-Intelligence
-    │   ├── README.md
-    │   ├── Inbound-Threat-Intelligence.json
-    │   ├── Inbound-Threat-Intelligence.kql
-    │   └── Inbound-Threat-Intelligence.png
     │
     ├── Entra-ID-Authentication-Failures
     │   ├── README.md
@@ -252,11 +240,23 @@ Azure Sentinel Security Analytics & Visualization
     │   ├── Entra-ID-Authentication-Success.kql
     │   └── Entra-ID-Authentication-Success.png
     │
-    ├── Azure-Resource-Creation-Modifications
+    ├── Inbound-Authentication-Origins
     │   ├── README.md
-    │   ├── Azure-Resource-Creation-Modifications.json
-    │   ├── Azure-Resource-Creation-Modifications.kql
-    │   └── Azure-Resource-Creation-Modifications.png
+    │   ├── Inbound-Authentication-Origins.json
+    │   ├── Inbound-Authentication-Origins.kql
+    │   └── Inbound-Authentication-Origins.png
+    │
+    ├── Inbound-Threat-Intelligence
+    │   ├── README.md
+    │   ├── Inbound-Threat-Intelligence.json
+    │   ├── Inbound-Threat-Intelligence.kql
+    │   └── Inbound-Threat-Intelligence.png
+    │
+    ├── Outbound-Connections
+    │   ├── README.md
+    │   ├── Outbound-Connections.json
+    │   ├── Outbound-Connections.kql
+    │   └── Outbound-Connections.png
     │
     └── VM-Authentication-Failures
         ├── README.md

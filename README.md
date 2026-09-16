@@ -1,4 +1,4 @@
-# Azure Sentinel (SIEM) Inbound Authentication Origins & Geographic Threat Visualization
+# Azure-Sentinel-Security-Analytics-Visualization
 
 ## Project Overview
 

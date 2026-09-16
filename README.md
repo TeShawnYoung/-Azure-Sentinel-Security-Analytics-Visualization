@@ -210,7 +210,7 @@ Each scenario includes the underlying **KQL query**, **Microsoft Sentinel Workbo
 ## Repository Structure
 
 ```text
-Azure-Sentinel-SIEM-Live-Threat-Operational-Data-Visualization
+Azure Sentinel Security Analytics & Visualization
 │
 ├── README.md
 │

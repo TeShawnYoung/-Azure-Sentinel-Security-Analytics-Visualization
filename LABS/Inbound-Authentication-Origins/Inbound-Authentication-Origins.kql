@@ -20,6 +20,20 @@ DeviceLogonEvents
 | order by Successes desc, Attempts desc
 
 
-
-
 -----------------------
+
+
+DeviceLogonEvents
+| where Timestamp {TimeRange}
+| where RemoteIPType == "Public" and isnotempty(RemoteIP)
+| where LogonType in ("Network", "RemoteInteractive")
+| extend geo = geo_info_from_ip_address(RemoteIP)
+| summarize Attempts  = count(),
+            Successes = countif(ActionType == "LogonSuccess"),
+            Failures  = countif(ActionType == "LogonFailed"),
+            Devices   = dcount(DeviceName),
+            Accounts  = make_set(AccountName, 25)
+         by RemoteIP,
+            Country = tostring(geo.country),
+            City    = tostring(geo.city)
+| order by Successes desc, Attempts desc

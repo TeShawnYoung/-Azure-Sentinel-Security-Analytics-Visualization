@@ -6,13 +6,13 @@ This project demonstrates the development of **Microsoft Sentinel security analy
 
 The project focuses on building practical security monitoring scenarios across endpoint, identity, network, threat intelligence, and Azure resource telemetry.
 
-Each scenario includes the underlying **KQL query**, **Microsoft Sentinel Workbook**, **visual dashboard**, and detailed documentation explaining the analysis and security findings. 
+Each scenario includes the underlying **KQL query**, **Microsoft Sentinel Workbook**, **visual dashboard**, and detailed documentation explaining the analysis and security findings.
 
 ---
 
 ## Core Visualizations & Security Scenarios
 
-### 1. ☁️ Azure Resource Creation & Modifications [![View Project](https://img.shields.io/badge/View-Project-2ea44f)](Azure-Resource-Creation-Modifications/README.md)
+### 1. ☁️ Azure Resource Creation & Modifications <a href="Azure-Resource-Creation-Modifications/README.md"><img src="https://img.shields.io/badge/-181717?style=flat&logo=github&logoColor=white" height="20"/></a>
 
 **Focus:** Monitoring Azure resource creation and modification activity.
 
@@ -26,14 +26,13 @@ Each scenario includes the underlying **KQL query**, **Microsoft Sentinel Workbo
 
 **Resources:**
 
-* 📄 [Detailed Lab Documentation](Documentation/Azure-Resource-Creation-Modifications.md)
-* 📊 [Workbook JSON](Workbooks/Azure-Resource-Creation-Modifications.json)
-* 🔎 [KQL Query](Queries/Azure-Resource-Creation-Modifications.kql)
-* 🖼️ [Dashboard Screenshot](Screenshots/Azure-Resource-Creation-Modifications.png)
+* 📊 [Workbook JSON](Azure-Resource-Creation-Modifications/Azure-Resource-Creation-Modifications.json)
+* 🔎 [KQL Query](Azure-Resource-Creation-Modifications/Azure-Resource-Creation-Modifications.kql)
+* 🖼️ [Dashboard Screenshot](Azure-Resource-Creation-Modifications/Azure-Resource-Creation-Modifications.png)
 
 ---
 
-### 2. 📤 Data Exfiltration
+### 2. 📤 Data Exfiltration <a href="Data-Exfiltration/README.md"><img src="https://img.shields.io/badge/-181717?style=flat&logo=github&logoColor=white" height="20"/></a>
 
 **Focus:** Identification and visualization of potentially unusual data transfer activity.
 
@@ -47,14 +46,13 @@ Each scenario includes the underlying **KQL query**, **Microsoft Sentinel Workbo
 
 **Resources:**
 
-* 📄 [Detailed Lab Documentation](Documentation/Data-Exfiltration.md)
-* 📊 [Workbook JSON](Workbooks/Data-Exfiltration.json)
-* 🔎 [KQL Query](Queries/Data-Exfiltration.kql)
-* 🖼️ [Dashboard Screenshot](Screenshots/Data-Exfiltration.png)
+* 📊 [Workbook JSON](Data-Exfiltration/Data-Exfiltration.json)
+* 🔎 [KQL Query](Data-Exfiltration/Data-Exfiltration.kql)
+* 🖼️ [Dashboard Screenshot](Data-Exfiltration/Data-Exfiltration.png)
 
 ---
 
-### 3. 🚨 Azure Sentinel (SIEM) Identity & Endpoint Authentication Monitoring
+### 3. 🚨 Azure Sentinel (SIEM) Identity & Endpoint Authentication Monitoring <a href="https://github.com/TeShawnYoung/Azure-Sentinel-SIEM-Identity-Endpoint-Authentication-Monitoring"><img src="https://img.shields.io/badge/-181717?style=flat&logo=github&logoColor=white" height="20"/></a>
 
 **Focus:** A multi-scenario Sentinel workbook project correlating identity and endpoint authentication telemetry to surface credential attacks, account compromise, and brute-force activity in near real time.
 
@@ -76,14 +74,13 @@ Each scenario includes the underlying **KQL query**, **Microsoft Sentinel Workbo
 
 **Resources:**
 
-* 📦 [Project Repository](https://github.com/TeShawnYoung/Azure-Sentinel-SIEM-Identity-Endpoint-Authentication-Monitoring)
 * 📄 [Entra ID Authentication Failures](https://github.com/TeShawnYoung/Azure-Sentinel-SIEM-Identity-Endpoint-Authentication-Monitoring/tree/main/Entra-ID-Authentication-Failures)
 * 📄 [Entra ID Authentication Success](https://github.com/TeShawnYoung/Azure-Sentinel-SIEM-Identity-Endpoint-Authentication-Monitoring/tree/main/Entra-ID-Authentication-Success)
 * 📄 [VM Authentication Failures](https://github.com/TeShawnYoung/Azure-Sentinel-SIEM-Identity-Endpoint-Authentication-Monitoring/tree/main/VM-Authentication-Failures)
 
 ---
 
-### 4. 🌍 Inbound Authentication Origins
+### 4. 🌍 Inbound Authentication Origins <a href="Inbound-Authentication-Origins/README.md"><img src="https://img.shields.io/badge/-181717?style=flat&logo=github&logoColor=white" height="20"/></a>
 
 **Focus:** Geographic analysis of external authentication activity.
 
@@ -99,14 +96,13 @@ Each scenario includes the underlying **KQL query**, **Microsoft Sentinel Workbo
 
 **Resources:**
 
-* 📄 [Detailed Lab Documentation](Documentation/Inbound-Authentication-Origins.md)
-* 📊 [Workbook JSON](Workbooks/Inbound-Authentication-Origins.json)
-* 🔎 [KQL Query](Queries/Inbound-Authentication-Origins.kql)
-* 🖼️ [Dashboard Screenshot](Screenshots/Inbound-Authentication-Origins.png)
+* 📊 [Workbook JSON](Inbound-Authentication-Origins/Inbound-Authentication-Origins.json)
+* 🔎 [KQL Query](Inbound-Authentication-Origins/Inbound-Authentication-Origins.kql)
+* 🖼️ [Dashboard Screenshot](Inbound-Authentication-Origins/Inbound-Authentication-Origins.png)
 
 ---
 
-### 5. 🛡️ Inbound Threat Intelligence
+### 5. 🛡️ Inbound Threat Intelligence <a href="Inbound-Threat-Intelligence/README.md"><img src="https://img.shields.io/badge/-181717?style=flat&logo=github&logoColor=white" height="20"/></a>
 
 **Focus:** Geographic and source-level visualization of inbound activity associated with threat intelligence data.
 
@@ -120,14 +116,13 @@ Each scenario includes the underlying **KQL query**, **Microsoft Sentinel Workbo
 
 **Resources:**
 
-* 📄 [Detailed Lab Documentation](Documentation/Inbound-Threat-Intel.md)
-* 📊 [Workbook JSON](Workbooks/Inbound-Threat-Intel.json)
-* 🔎 [KQL Query](Queries/Inbound-Threat-Intel.kql)
-* 🖼️ [Dashboard Screenshot](Screenshots/Inbound-Threat-Intel.png)
+* 📊 [Workbook JSON](Inbound-Threat-Intelligence/Inbound-Threat-Intelligence.json)
+* 🔎 [KQL Query](Inbound-Threat-Intelligence/Inbound-Threat-Intelligence.kql)
+* 🖼️ [Dashboard Screenshot](Inbound-Threat-Intelligence/Inbound-Threat-Intelligence.png)
 
 ---
 
-### 6. 🌐 Outbound Connections
+### 6. 🌐 Outbound Connections <a href="Outbound-Connections/README.md"><img src="https://img.shields.io/badge/-181717?style=flat&logo=github&logoColor=white" height="20"/></a>
 
 **Focus:** Analysis and visualization of outbound network connections.
 
@@ -143,10 +138,9 @@ Each scenario includes the underlying **KQL query**, **Microsoft Sentinel Workbo
 
 **Resources:**
 
-* 📄 [Detailed Lab Documentation](Documentation/Outbound-Connections.md)
-* 📊 [Workbook JSON](Workbooks/Outbound-Connections.json)
-* 🔎 [KQL Query](Queries/Outbound-Connections.kql)
-* 🖼️ [Dashboard Screenshot](Screenshots/Outbound-Connections.png)
+* 📊 [Workbook JSON](Outbound-Connections/Outbound-Connections.json)
+* 🔎 [KQL Query](Outbound-Connections/Outbound-Connections.kql)
+* 🖼️ [Dashboard Screenshot](Outbound-Connections/Outbound-Connections.png)
 
 ---
 

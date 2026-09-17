@@ -12,7 +12,7 @@ Each scenario includes the underlying **KQL query**, **Microsoft Sentinel Workbo
 
 ## Core Visualizations & Security Scenarios
 
-### 1. ☁️ Azure Resource Creation & Modifications
+### 1. ☁️ Azure Resource Creation & Modifications [![View Project](https://img.shields.io/badge/View-Project-2ea44f)](Azure-Resource-Creation-Modifications/README.md)
 
 **Focus:** Monitoring Azure resource creation and modification activity.
 

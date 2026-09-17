@@ -6,7 +6,7 @@ This project demonstrates the development of **Microsoft Sentinel security analy
 
 The project focuses on building practical security monitoring scenarios across endpoint, identity, network, threat intelligence, and Azure resource telemetry.
 
-Each scenario includes the underlying **KQL query**, **Microsoft Sentinel Workbook**, **visual dashboard**, and detailed documentation explaining the analysis and security findings.
+Each scenario includes the underlying **KQL query**, **Microsoft Sentinel Workbook**, **visual dashboard**, and detailed documentation explaining the analysis and security findings. 
 
 ---
 
@@ -54,53 +54,36 @@ Each scenario includes the underlying **KQL query**, **Microsoft Sentinel Workbo
 
 ---
 
-### 3. 🔐 Entra ID Authentication Failures
+### 3. 🚨 Azure Sentinel (SIEM) Identity & Endpoint Authentication Monitoring
 
-**Focus:** Analysis of failed Microsoft Entra ID authentication activity.
+**Focus:** A multi-scenario Sentinel workbook project correlating identity and endpoint authentication telemetry to surface credential attacks, account compromise, and brute-force activity in near real time.
 
-**Log Source:** `SigninLogs`
+**Log Sources:** `SigninLogs`, `DeviceLogonEvents`
 
-**Key Capabilities:**
+**Scenarios Covered:**
 
-* Authentication failure analysis
-* Source IP investigation
-* Geographic authentication patterns
-* Account targeting analysis
-* Identification of potential credential attacks
-
-**Resources:**
-
-* 📄 [Detailed Lab Documentation](Documentation/Entra-ID-Authentication-Failures.md)
-* 📊 [Workbook JSON](Workbooks/Entra-ID-Authentication-Failures.json)
-* 🔎 [KQL Query](Queries/Entra-ID-Authentication-Failures.kql)
-* 🖼️ [Dashboard Screenshot](Screenshots/Entra-ID-Authentication-Failures.png)
-
----
-
-### 4. ✅ Entra ID Authentication Success
-
-**Focus:** Analysis of successful Microsoft Entra ID authentication activity.
-
-**Log Source:** `SigninLogs`
+* **Entra ID Authentication Failures** — failed sign-in analysis, source IP investigation, geographic patterns, and account-targeting analysis to identify potential credential attacks.
+* **Entra ID Authentication Success** — successful sign-in monitoring, geographic source analysis, and user/application context to flag unusual or potentially compromised account activity.
+* **VM Authentication Failures** — failed authentication attempts against Azure virtual machines, source IP investigation, and geographic visualization to identify potential brute-force activity.
 
 **Key Capabilities:**
 
-* Successful authentication monitoring
-* Geographic source analysis
-* User and application context
-* Unusual authentication identification
-* Investigation of potentially compromised accounts
+* Cross-scenario identity and endpoint authentication monitoring
+* Source IP and geographic authentication pattern analysis
+* Account and device targeting analysis
+* Correlation between failed and successful authentication activity
+* Identification of credential attacks, brute-force attempts, and potentially compromised accounts
 
 **Resources:**
 
-* 📄 [Detailed Lab Documentation](Documentation/Entra-ID-Authentication-Success.md)
-* 📊 [Workbook JSON](Workbooks/Entra-ID-Authentication-Success.json)
-* 🔎 [KQL Query](Queries/Entra-ID-Authentication-Success.kql)
-* 🖼️ [Dashboard Screenshot](Screenshots/Entra-ID-Authentication-Success.png)
+* 📦 [Project Repository](https://github.com/TeShawnYoung/Azure-Sentinel-SIEM-Identity-Endpoint-Authentication-Monitoring)
+* 📄 [Entra ID Authentication Failures](https://github.com/TeShawnYoung/Azure-Sentinel-SIEM-Identity-Endpoint-Authentication-Monitoring/tree/main/Entra-ID-Authentication-Failures)
+* 📄 [Entra ID Authentication Success](https://github.com/TeShawnYoung/Azure-Sentinel-SIEM-Identity-Endpoint-Authentication-Monitoring/tree/main/Entra-ID-Authentication-Success)
+* 📄 [VM Authentication Failures](https://github.com/TeShawnYoung/Azure-Sentinel-SIEM-Identity-Endpoint-Authentication-Monitoring/tree/main/VM-Authentication-Failures)
 
 ---
 
-### 5. 🌍 Inbound Authentication Origins
+### 4. 🌍 Inbound Authentication Origins
 
 **Focus:** Geographic analysis of external authentication activity.
 
@@ -123,7 +106,7 @@ Each scenario includes the underlying **KQL query**, **Microsoft Sentinel Workbo
 
 ---
 
-### 6. 🛡️ Inbound Threat Intelligence
+### 5. 🛡️ Inbound Threat Intelligence
 
 **Focus:** Geographic and source-level visualization of inbound activity associated with threat intelligence data.
 
@@ -144,7 +127,7 @@ Each scenario includes the underlying **KQL query**, **Microsoft Sentinel Workbo
 
 ---
 
-### 7. 🌐 Outbound Connections
+### 6. 🌐 Outbound Connections
 
 **Focus:** Analysis and visualization of outbound network connections.
 
@@ -167,27 +150,6 @@ Each scenario includes the underlying **KQL query**, **Microsoft Sentinel Workbo
 
 ---
 
-### 8. 🖥️ VM Authentication Failures
-
-**Focus:** Analysis of authentication failures targeting Azure virtual machines.
-
-**Key Capabilities:**
-
-* VM authentication monitoring
-* Failed login analysis
-* Source IP investigation
-* Geographic activity visualization
-* Identification of potential brute-force activity
-
-**Resources:**
-
-* 📄 [Detailed Lab Documentation](Documentation/VM-Authentication-Failures.md)
-* 📊 [Workbook JSON](Workbooks/VM-Authentication-Failures.json)
-* 🔎 [KQL Query](Queries/VM-Authentication-Failures.kql)
-* 🖼️ [Dashboard Screenshot](Screenshots/VM-Authentication-Failures.png)
-
----
-
 ## Technical Architecture & Workflow
 
 1. **Ingestion**
@@ -204,66 +166,6 @@ Each scenario includes the underlying **KQL query**, **Microsoft Sentinel Workbo
 
 5. **Investigation**
    Visualizations are designed to help analysts identify anomalies, prioritize suspicious activity, and develop additional investigative queries.
-
----
-
-## Repository Structure
-
-```text
-Azure Sentinel Security Analytics & Visualization
-│
-├── README.md
-│
-└── LABS
-    │
-    ├── Azure-Resource-Creation-Modifications
-    │   ├── README.md
-    │   ├── Azure-Resource-Creation-Modifications.json
-    │   ├── Azure-Resource-Creation-Modifications.kql
-    │   └── Azure-Resource-Creation-Modifications.png
-    │
-    ├── Data-Exfiltration
-    │   ├── README.md
-    │   ├── Data-Exfiltration.json
-    │   ├── Data-Exfiltration.kql
-    │   └── Data-Exfiltration.png
-    │
-    ├── Entra-ID-Authentication-Failures
-    │   ├── README.md
-    │   ├── Entra-ID-Authentication-Failures.json
-    │   ├── Entra-ID-Authentication-Failures.kql
-    │   └── Entra-ID-Authentication-Failures.png
-    │
-    ├── Entra-ID-Authentication-Success
-    │   ├── README.md
-    │   ├── Entra-ID-Authentication-Success.json
-    │   ├── Entra-ID-Authentication-Success.kql
-    │   └── Entra-ID-Authentication-Success.png
-    │
-    ├── Inbound-Authentication-Origins
-    │   ├── README.md
-    │   ├── Inbound-Authentication-Origins.json
-    │   ├── Inbound-Authentication-Origins.kql
-    │   └── Inbound-Authentication-Origins.png
-    │
-    ├── Inbound-Threat-Intelligence
-    │   ├── README.md
-    │   ├── Inbound-Threat-Intelligence.json
-    │   ├── Inbound-Threat-Intelligence.kql
-    │   └── Inbound-Threat-Intelligence.png
-    │
-    ├── Outbound-Connections
-    │   ├── README.md
-    │   ├── Outbound-Connections.json
-    │   ├── Outbound-Connections.kql
-    │   └── Outbound-Connections.png
-    │
-    └── VM-Authentication-Failures
-        ├── README.md
-        ├── VM-Authentication-Failures.json
-        ├── VM-Authentication-Failures.kql
-        └── VM-Authentication-Failures.png
-```
 
 ---
 

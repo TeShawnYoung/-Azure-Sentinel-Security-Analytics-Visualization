@@ -96,9 +96,9 @@ Each scenario includes the underlying **KQL query**, **Microsoft Sentinel Workbo
 
 **Resources:**
 
-* 📊 [Workbook JSON](Inbound-Authentication-Origins/Inbound-Authentication-Origins.json)
-* 🔎 [KQL Query](Inbound-Authentication-Origins/Inbound-Authentication-Origins.kql)
-* 🖼️ [Dashboard Screenshot](Inbound-Authentication-Origins/Inbound-Authentication-Origins.png)
+* 📊 [Workbook JSON](https://github.com/TeShawnYoung/Inbound-Authentication-Origins/blob/main/Inbound-Authentication-Origins.json)
+* 🔎 [KQL Query](https://github.com/TeShawnYoung/Inbound-Authentication-Origins/blob/main/Inbound-Authentication-Origins.kql)
+* 🖼️ [Dashboard Screenshot](https://github.com/TeShawnYoung/Inbound-Authentication-Origins/blob/main/Inbound-Authentication-Origins.png)
 
 ---
 

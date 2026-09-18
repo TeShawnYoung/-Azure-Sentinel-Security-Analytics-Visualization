@@ -138,9 +138,9 @@ Each scenario includes the underlying **KQL query**, **Microsoft Sentinel Workbo
 
 **Resources:**
 
-* 📊 [Workbook JSON](Outbound-Connections/Outbound-Connections.json)
-* 🔎 [KQL Query](Outbound-Connections/Outbound-Connections.kql)
-* 🖼️ [Dashboard Screenshot](Outbound-Connections/Outbound-Connections.png)
+* 📊 [Workbook JSON](https://github.com/TeShawnYoung/Outbound-Connections/blob/main/Outbound-connections.json)
+* 🔎 [KQL Query](https://github.com/TeShawnYoung/Outbound-Connections/blob/main/Outbound-Connections.kql)
+* 🖼️ [Dashboard Screenshot](https://github.com/TeShawnYoung/Outbound-Connections/blob/main/Outbound-Connections.png)
 
 ---
 
